@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: database-migration
+  labels:
+    app: migr
+spec:
+  template:
+    spec:
+      containers:
+        - name: database-migration
+          image: sergbs/changelog-image3:0
+          args: [ "liquibase", "--contexts=finwise" , "update"]
+          env:
+          - name: LIQUIBASE_HOST
+            value: my-postgres
+          - name: LIQUIBASE_DEBUG
+            value: 'yes'
+      imagePullSecrets:
+        - name: sergdockerhub
+      restartPolicy: Never
+  backoffLimit: 4

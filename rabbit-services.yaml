@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: shb-rabbit
+spec:
+  selector:
+    app: shb-rabbit
+  ports:
+  - port: 5672
+  clusterIP: None

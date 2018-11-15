@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shb-back
+  labels:
+    app: shb-back
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: shb-back
+      labels:
+        app: shb-back
+    spec:
+      containers:
+      - name: shb-back
+        image: dc2.my-bg.ru/shb/shb:SNAPSHOT-1.0.0.118
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080
+        volumeMounts:
+        - name: config-volume
+          mountPath: /conf
+        - name: jks-volume
+          mountPath: /conf/keystores
+        env:
+        - name: SPRING_CONFIG_LOCATION
+          value: /conf/
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:postgresql://my-postgres:5432/test_database
+      volumes:
+      - name: config-volume
+        configMap:
+          name: spring-app-config
+      - name: jks-volume
+        configMap:
+          name: shb-jks
+      imagePullSecrets:
+      - name: regcred
+
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: shb-back
