@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{  include "chart-shb.fullname" .}}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  labels:
+    app.kubernetes.io/name: {{ include "chart-shb.name" . }}
+    helm.sh/chart: {{ include "chart-shb.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  rules:
+    - host: test.host
+      http:
+        paths:
+          - path: /api
+            backend:
+              serviceName:  {{ include "shb-back.fullname" . }}
+              servicePort: 8080
+          - path: /
+            backend:
+              serviceName: {{ include "shb-ui.fullname" . }}
+              servicePort: 80

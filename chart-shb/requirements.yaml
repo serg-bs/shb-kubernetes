@@ -1,0 +1,6 @@
+dependencies:
+  - name: shb-ui
+    repository: alias:local
+    version: 0.1.0
+    tags:
+      - shb-ui

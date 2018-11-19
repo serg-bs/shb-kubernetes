@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shb-back-configmap 
+"data": {
+  "application.properties": "server.port=8095\n\nspring.jooq.sql-dialect=POSTGRES\nspring.datasource.driver-class-name=org.postgresql.Driver\nspring.datasource.url=jdbc:postgresql://${postgres.host}:${postgres.port}/${postgres.schema_shb}\nspring.datasource.username=${postgres.user}\nspring.datasource.password=${postgres.password}\n\n#amqp listener\nspring.rabbitmq.host=${rabbitmq.host}\nspring.rabbitmq.port=${rabbitmq.port}\nspring.rabbitmq.username=${rabbitmq.username}\nspring.rabbitmq.password=${rabbitmq.password}\nspring.rabbitmq.virtualHost=${rabbitmq.virtualHost}\n\nsignature.keystore.path=${keystore.path}\n\nshbadapter.rest.template.root.uri=http://localhost:8095"
+}
