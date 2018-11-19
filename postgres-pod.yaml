@@ -17,7 +17,7 @@ spec:
       - name: POSTGRES_USER
         value: test_user
     ports:
-    - containerPort: 5432
+      - containerPort: 5432
   imagePullSecrets:
     - name: regcred
 

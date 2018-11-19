@@ -1,0 +1,26 @@
+tags:
+  shb-ui: true
+
+ingress:
+  enabled: true
+  path: /
+  hosts:
+    - shb.local
+
+global:
+  host: test.host
+  imagepullsecrets: regcred
+
+  postgres:
+    port: "5432"
+    schema_shb: test_database
+    schema_adapter: shb_adapter_database
+    user: test_user
+    password: qwerty
+
+  rabbitmq:
+    host: shb-rabbit
+    port: "5672"
+    username: serg
+    password: qwerty
+    virtualHost: my_vhost

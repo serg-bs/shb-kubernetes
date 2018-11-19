@@ -1,0 +1,17 @@
+# Default values for shb-ui.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: dc2.my-bg.ru/shb/shb-ui
+  tag: RED-1.0.0.43
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80

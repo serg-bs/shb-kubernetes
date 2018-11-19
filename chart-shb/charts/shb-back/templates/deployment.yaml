@@ -1,0 +1,57 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "shb-back.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "shb-back.name" . }}
+    helm.sh/chart: {{ include "shb-back.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "shb-back.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "shb-back.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: config-volume
+              mountPath: {{ .Values.configPath }}
+            - name: jks-volume
+              mountPath: {{ .Values.configPath }}/keystores
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: {{ .Values.configPath }}/
+            - name: postgres.host
+              value: cool-postgres
+            - name: keystore.path
+              value: {{ .Values.configPath }}/keystores/shb.jks
+            {{- range $key, $value := .Values.global.postgres }}
+            - name: postgres.{{$key}}
+              value: {{ $value | quote}}
+            {{- end }}
+            {{- range $key, $value := .Values.global.rabbitmq }}
+            - name: rabbitmq.{{$key}}
+              value: {{ $value | quote}}
+            {{- end }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: shb-back-configmap
+        - name: jks-volume
+          configMap:
+            name: shb-jks
+      imagePullSecrets:
+        - name: {{ .Values.global.imagepullsecrets}}
+      restartPolicy: Always
