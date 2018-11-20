@@ -1,30 +1,35 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: cool-postgres
+  name: {{ template "shb-postgres.fullname" . }}
+  labels:
+    app: {{ template "shb-postgres.name" . }}
+    chart: {{ template "shb-postgres.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
 spec:
   serviceName: "cool-postgres"
   replicas: 1
   selector:
     matchLabels:
-      app: cool-postgres
+      app: {{ include "shb-postgres.name" . }}
   template:
     metadata:
       labels:
-        app: cool-postgres
+        app: {{ include "shb-postgres.name" . }}
     spec:
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecrets }}
       containers:
-        - name: postgres
-          image: dc2.my-bg.ru/shb/postgres:10
-          imagePullPolicy: IfNotPresent
+        - name: {{ template "shb-postgres.fullname" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: POSTGRES_DB
-              value: test_database
-            - name: POSTGRES_PASSWORD
-              value: qwerty
             - name: POSTGRES_USER
-              value: test_user
+              value: {{ .Values.global.postgres.user | quote }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.global.postgres.password | quote }}
+            - name: POSTGRES_DB
+              value: {{ .Values.global.postgres.schema_shb | quote }}
           ports:
             - containerPort: 5432
-      imagePullSecrets:
-        - name: regcred
