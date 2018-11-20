@@ -3,7 +3,7 @@
 Expand the name of the chart.
 */}}
 {{- define "shb-postgres.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- default "shb-postgres" .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*

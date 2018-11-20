@@ -34,7 +34,7 @@ spec:
             - name: SPRING_CONFIG_LOCATION
               value: {{ .Values.configPath }}/
             - name: postgres.host
-              value: cool-postgres
+              value: {{ include "shb-postgres.name" . }}-headless
             - name: keystore.path
               value: {{ .Values.configPath }}/keystores/shb.jks
             {{- range $key, $value := .Values.global.postgres }}

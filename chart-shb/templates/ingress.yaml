@@ -11,7 +11,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   rules:
-    - host: test.host
+    - host: {{ .Values.ingress.host }}
       http:
         paths:
           - path: /api

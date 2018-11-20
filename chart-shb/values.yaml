@@ -2,13 +2,11 @@ tags:
   shb-ui: true
 
 ingress:
-  enabled: true
-  path: /
-  hosts:
-    - shb.local
+  host: test.host
+  ui_port: 80
+  back_port: 8080
 
 global:
-  host: test.host
   imagepullsecrets: regcred
 
   postgres:
