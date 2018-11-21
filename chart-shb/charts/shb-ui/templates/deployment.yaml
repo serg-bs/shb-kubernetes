@@ -22,7 +22,7 @@ spec:
       containers:
         - env:
             - name: API_SERVER
-              value: http://{{.Values.global.host}}/api
+              value: http://{{.Values.global.ingress.host}}/api
             - name: DISABLE_ENDPOINT_ERROR_HANDLING
               value: "true"
             - name: HOST

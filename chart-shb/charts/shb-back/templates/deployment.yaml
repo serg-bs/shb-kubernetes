@@ -34,7 +34,7 @@ spec:
             - name: SPRING_CONFIG_LOCATION
               value: {{ .Values.configPath }}/
             - name: postgres.host
-              value: {{ include "shb-postgres.name" . }}-headless
+              value: {{ .Release.Name }}-shb-postgres
             - name: keystore.path
               value: {{ .Values.configPath }}/keystores/shb.jks
             {{- range $key, $value := .Values.global.postgres }}
@@ -45,10 +45,32 @@ spec:
             - name: rabbitmq.{{$key}}
               value: {{ $value | quote}}
             {{- end }}
+          {{- if .Values.back.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: '/info'
+              port: 8080
+            initialDelaySeconds: {{ .Values.back.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.back.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.back.readinessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.back.readinessProbe.failureThreshold }}
+            successThreshold: {{ .Values.back.readinessProbe.successThreshold }}
+          {{- end }}
+          {{- if .Values.back.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: '/info'
+              port: 8080
+            initialDelaySeconds: {{ .Values.back.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.back.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.back.livenessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.back.livenessProbe.failureThreshold }}
+            successThreshold: {{ .Values.back.livenessProbe.successThreshold }}
+           {{- end }}
       volumes:
         - name: config-volume
           configMap:
-            name: shb-back-configmap
+            name: {{ .Release.Name }}-shb-back
         - name: jks-volume
           configMap:
             name: shb-jks

@@ -1,14 +1,5 @@
-replicaCount: 1
-
 image:
   repository: dc2.my-bg.ru/shb/postgres
   tag: 10
-  pullSecrets: regcred
   pullPolicy: IfNotPresent
 
-postgresqlUsername: test_user
-postgresqlPassword: qwerty
-postgresqlDatabase: test_database
-
-service:
-  port: 5432

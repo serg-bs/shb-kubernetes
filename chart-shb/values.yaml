@@ -1,13 +1,14 @@
 tags:
   shb-ui: true
 
-ingress:
-  host: test.host
-  ui_port: 80
-  back_port: 8080
 
 global:
   imagepullsecrets: regcred
+
+  ingress:
+    host: test.host
+    ui_port: 80
+    back_port: 8080
 
   postgres:
     port: "5432"

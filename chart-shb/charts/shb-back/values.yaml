@@ -4,15 +4,45 @@
 
 replicaCount: 1
 
+initContainerImage: "alpine:3.6"
+
 image:
   repository: dc2.my-bg.ru/shb/shb
   tag: SNAPSHOT-1.0.0.118
   pullPolicy: IfNotPresent
 
-nameOverride: ""
-fullnameOverride: ""
 configPath: /conf
 
 service:
   type: ClusterIP
   port: 8080
+
+migration:
+  image: sergbs/changelog-image3:0
+
+postgres:
+  enabled: true
+  port: "5432"
+  schema: db
+  user: user
+  password: qwerty
+
+db:
+  host:
+
+back:
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 180
+    failureThreshold: 10
+    timeoutSeconds: 10
+    periodSeconds: 10
+    successThreshold: 1
+
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 60
+    failureThreshold: 10
+    timeoutSeconds: 10
+    periodSeconds: 10
+    successThreshold: 1
