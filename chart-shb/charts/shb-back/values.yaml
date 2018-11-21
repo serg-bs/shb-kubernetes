@@ -26,13 +26,12 @@ postgres:
   schema: db
   user: user
   password: qwerty
-
 db:
   host:
 
 back:
   livenessProbe:
-    enabled: true
+    enabled: false
     initialDelaySeconds: 180
     failureThreshold: 10
     timeoutSeconds: 10
@@ -40,7 +39,7 @@ back:
     successThreshold: 1
 
   readinessProbe:
-    enabled: true
+    enabled: false
     initialDelaySeconds: 60
     failureThreshold: 10
     timeoutSeconds: 10

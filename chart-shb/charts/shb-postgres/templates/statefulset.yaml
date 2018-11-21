@@ -26,10 +26,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: POSTGRES_USER
-              value: {{ .Values.global.postgres.user | quote }}
+              value: {{ .Values.global.back.postgres.user | quote }}
             - name: POSTGRES_PASSWORD
-              value: {{ .Values.global.postgres.password | quote }}
+              value: {{ .Values.global.back.postgres.password | quote }}
             - name: POSTGRES_DB
-              value: {{ .Values.global.postgres.schema_shb | quote }}
+              value: {{ .Values.global.back.postgres.schema | quote }}
           ports:
             - containerPort: 5432

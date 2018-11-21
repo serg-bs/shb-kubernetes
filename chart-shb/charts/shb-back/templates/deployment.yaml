@@ -33,11 +33,13 @@ spec:
           env:
             - name: SPRING_CONFIG_LOCATION
               value: {{ .Values.configPath }}/
+            - name: cookies-domain
+              value: {{ .Values.global.ingress.host}}
             - name: postgres.host
-              value: {{ .Release.Name }}-shb-postgres
+              value: {{.Values.global.back.postgres.host | default ( printf "%s-%s" .Release.Name "shb-postgres")  }}
             - name: keystore.path
               value: {{ .Values.configPath }}/keystores/shb.jks
-            {{- range $key, $value := .Values.global.postgres }}
+            {{- range $key, $value := .Values.global.back.postgres }}
             - name: postgres.{{$key}}
               value: {{ $value | quote}}
             {{- end }}
