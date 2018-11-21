@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "shb-postgres.name" . }}-headless
+  name: {{ .Release.Name }}-shb-postgres
 spec:
   selector:
     app: {{ include "shb-postgres.name" . }}

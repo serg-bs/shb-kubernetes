@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+    name: {{ .Release.Name }}-migration
+    labels:
+        app.kubernetes.io/managed-by: {{.Release.Service | quote }}
+        app.kubernetes.io/instance: {{.Release.Name | quote }}
+        helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+spec:
+    template:
+        metadata:
+            name: {{ .Release.Name }}-migration
+            labels:
+                app.kubernetes.io/managed-by: {{.Release.Service | quote }}
+                app.kubernetes.io/instance: {{.Release.Name | quote }}
+                helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+        spec:
+            initContainers:
+              - name: "wait-for-db"
+                image: "{{ .Values.initContainerImage }}"
+                command:
+                - 'sh'
+                - '-c'
+                - >
+                  until nc -z -w 2 {{ .Release.Name }}-shb-postgres 5432 && echo database ok; do
+                    sleep 2;
+                  done;
+            containers:
+                - name: database-migration
+                  image: {{ .Values.migration.image }}
+                  args: [ "liquibase", "--contexts=finwise" , "update"]
+                  env:
+                      - name: LIQUIBASE_HOST
+                        value: {{ .Release.Name }}-shb-postgres
+                      - name: LIQUIBASE_DEBUG
+                        value: 'yes'
+            imagePullSecrets:
+                - name: sergdockerhub
+            restartPolicy: Never
+    backoffLimit: 4

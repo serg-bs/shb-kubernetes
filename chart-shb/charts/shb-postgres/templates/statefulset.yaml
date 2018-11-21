@@ -8,7 +8,7 @@ metadata:
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
 spec:
-  serviceName: "cool-postgres"
+  serviceName: {{ include "shb-postgres.name" . }}
   replicas: 1
   selector:
     matchLabels:
@@ -19,7 +19,7 @@ spec:
         app: {{ include "shb-postgres.name" . }}
     spec:
       imagePullSecrets:
-        - name: {{ .Values.image.pullSecrets }}
+        - name: {{ .Values.global.imagepullsecrets }}
       containers:
         - name: {{ template "shb-postgres.fullname" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
