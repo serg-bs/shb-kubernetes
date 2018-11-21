@@ -10,12 +10,14 @@ global:
     ui_port: 80
     back_port: 8080
 
-  postgres:
-    port: "5432"
-    schema_shb: test_database
-    schema_adapter: shb_adapter_database
-    user: test_user
-    password: qwerty
+  back:
+    postgres:
+      host: 192.168.4.220
+      port: "5432"
+      schema: test_database
+      schema_adapter: shb_adapter_database
+      user: test_user
+      password: qwerty
 
   rabbitmq:
     host: shb-rabbit

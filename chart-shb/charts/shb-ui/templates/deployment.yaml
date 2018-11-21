@@ -22,11 +22,11 @@ spec:
       containers:
         - env:
             - name: API_SERVER
-              value: http://{{.Values.global.ingress.host}}/api
+              value: http://{{ .Values.global.ingress.host }}/api
             - name: DISABLE_ENDPOINT_ERROR_HANDLING
               value: "true"
             - name: HOST
-              value: {{ .Values.global.host}}
+              value: {{ .Values.global.ingress.host }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Chart.Name }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
