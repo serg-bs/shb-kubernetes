@@ -1,5 +1,8 @@
 tags:
   shb-ui: true
+  shb-back: true
+  shb-postgres: true
+  shb-rabbit: true
 
 
 global:
@@ -10,17 +13,20 @@ global:
     ui_port: 80
     back_port: 8080
 
-  back:
-    postgres:
-      host: 192.168.4.220
-      port: "5432"
-      schema: test_database
-      schema_adapter: shb_adapter_database
-      user: test_user
-      password: qwerty
+  # если необходимо использовать базу вне kubernetes
+  # Разблокировать и установить флаг для блокировки чата tags.shb-postgres=false
+  # postgres_host: 192.168.4.220
 
+  postgres:
+    port: "5432"
+    schema: test_database
+    user: test_user
+    password: qwerty
+
+  # если необходимо использовать rabbitmq вне kubernetes
+  # Разблокировать и установить флаг для блокировки чата tags.shb-rabbit=false
+  # rabbit_host: 192.168.4.220
   rabbitmq:
-    host: shb-rabbit
     port: "5672"
     username: serg
     password: qwerty
