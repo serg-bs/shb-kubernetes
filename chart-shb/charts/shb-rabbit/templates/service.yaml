@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "shb-rabbit.fullname" . }}
+  labels:
+    app: "shb-rabbit"
+    helm.sh/chart: {{ include "shb-rabbit.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  clusterIP: None
+  ports:
+    - port: {{ .Values.global.rabbitmq.port }}
+  selector:
+    app: "shb-rabbit"

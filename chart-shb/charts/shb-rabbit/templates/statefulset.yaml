@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+    name: {{ include "shb-rabbit.fullname" . }}
+spec:
+    serviceName: "shb-rabbit"
+    replicas: 1
+    selector:
+        matchLabels:
+            app: "shb-rabbit"
+    template:
+        metadata:
+            labels:
+                app: "shb-rabbit"
+        spec:
+            containers:
+                - name: {{ include "shb-rabbit.fullname" . }}
+                  image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+                  env:
+                      - name: RABBITMQ_DEFAULT_VHOST
+                        value: {{ .Values.global.rabbitmq.virtualHost }}
+                      - name: RABBITMQ_DEFAULT_USER
+                        value: {{ .Values.global.rabbitmq.username}}
+                      - name: RABBITMQ_DEFAULT_PASS
+                        value: {{ .Values.global.rabbitmq.password}}
+                  ports:
+                      - containerPort: {{ .Values.global.rabbitmq.port}}
+                  volumeMounts:
+                      - name: rmq-volume
+                        mountPath: /var/lib/rabbitmq/mnesia
+            imagePullSecrets:
+              - name: {{ .Values.global.imagepullsecrets }}
+
+    volumeClaimTemplates:
+        - metadata:
+              name: rmq-volume
+          spec:
+              accessModes: [ "ReadWriteOnce" ]
+              resources:
+                  requests:
+                      storage: 1Gi
+
+

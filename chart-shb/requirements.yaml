@@ -4,3 +4,21 @@ dependencies:
     version: 0.1.0
     tags:
       - shb-ui
+
+  - name: shb-back
+    repository: alias:local
+    version: 0.1.0
+    tags:
+      - shb-back
+
+  - name: shb-postgres
+    repository: alias:local
+    version: 0.1.0
+    tags:
+      - shb-postgres
+
+  - name: shb-rabbit
+    repository: alias:local
+    version: 0.1.0
+    tags:
+      - shb-rabbit
