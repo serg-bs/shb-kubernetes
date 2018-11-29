@@ -1,5 +1,5 @@
 image:
-  repository: dc2.my-bg.ru/shb/postgres
-  tag: 10
+  repository: dc2.my-bg.ru/shb/shb_postgres
+  tag: 2018-11-28
   pullPolicy: IfNotPresent
 

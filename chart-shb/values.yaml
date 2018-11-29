@@ -19,7 +19,7 @@ global:
 
   postgres:
     port: "5432"
-    schema: test_database
+    schema: shb_develop
     user: test_user
     password: qwerty
 
