@@ -19,6 +19,16 @@ spec:
         app.kubernetes.io/name: "shb-back"
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      initContainers:
+      - name: "wait-for-db"
+        image: "{{ .Values.initContainerImage }}"
+        command:
+          - 'sh'
+          - '-c'
+          - >
+            until nc -z -w 2 {{ .Release.Name }}-shb-postgres 5432 && echo database ok; do
+              sleep 2;
+            done;
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
