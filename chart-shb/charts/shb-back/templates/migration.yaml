@@ -27,14 +27,22 @@ spec:
                   done;
             containers:
                 - name: database-migration
-                  image: {{ .Values.migration.image }}
+                  image: {{ .Values.migration.image }}:{{ .Values.image.tag}}
                   args: [ "liquibase", "--contexts=finwise" , "update"]
                   env:
                       - name: LIQUIBASE_HOST
                         value: {{ .Release.Name }}-shb-postgres
                       - name: LIQUIBASE_DEBUG
                         value: 'yes'
+                      - name: LIQUIBASE_DATABASE
+                        value: {{ .Values.global.postgres.schema}}
+                      - name: LIQUIBASE_USERNAME
+                        value: {{ .Values.global.postgres.user}}
+                      - name: LIQUIBASE_PASSWORD
+                        value: {{ .Values.global.postgres.password}}
+                      - name: LIQUIBASE_CHANGELOG
+                        value: "master.xml"
             imagePullSecrets:
-                - name: sergdockerhub
+                - name: {{ .Values.global.imagepullsecrets}}
             restartPolicy: Never
     backoffLimit: 4

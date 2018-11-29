@@ -8,7 +8,7 @@ initContainerImage: "alpine:3.6"
 
 image:
   repository: dc2.my-bg.ru/shb/shb
-  tag: SNAPSHOT-1.0.0.118
+  tag: KUBE-1.0.0.20
   pullPolicy: IfNotPresent
 
 configPath: /conf
@@ -18,7 +18,7 @@ service:
   port: 8080
 
 migration:
-  image: sergbs/changelog-image3:0
+  image: dc2.my-bg.ru/shb/shb_patches
 
 postgres:
   enabled: true
