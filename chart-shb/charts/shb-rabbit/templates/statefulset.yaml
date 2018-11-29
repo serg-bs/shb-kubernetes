@@ -25,19 +25,5 @@ spec:
                         value: {{ .Values.global.rabbitmq.password}}
                   ports:
                       - containerPort: {{ .Values.global.rabbitmq.port}}
-                  volumeMounts:
-                      - name: rmq-volume
-                        mountPath: /var/lib/rabbitmq/mnesia
             imagePullSecrets:
               - name: {{ .Values.global.imagepullsecrets }}
-
-    volumeClaimTemplates:
-        - metadata:
-              name: rmq-volume
-          spec:
-              accessModes: [ "ReadWriteOnce" ]
-              resources:
-                  requests:
-                      storage: 1Gi
-
-
