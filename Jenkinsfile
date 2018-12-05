@@ -1,4 +1,8 @@
 node {
+    stage('Clone repository') {
+        checkout scm
+    }
+
     stage('Run kubectl') {
         sh "kubectl get pods"
         sh "helm init --service-account tiller --client-only"
