@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     def shbBackRepo = "shb/shb"
-                    def shbBackRepoLatest = "shb/shb-"+$(BRANCH_NAME)
+                    def shbBackRepoLatest = "shb/shb-${GIT_LOCAL_BRANCH}"
 
                     def startDate = new Date()
                     def getVersionScript = "./findDockerImages.bash " + shbBackRepo + " " + shbBackRepoLatest + " $REGISTRY_CRED"
