@@ -17,24 +17,30 @@ pipeline {
 
     stages {
         stage('Clone repository') {
-            checkout scm
+            steps {
+                checkout scm
+            }
         }
 
         stage('Find docker images') {
-            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-registry-shb-deploy-credentials-id',
-                              usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+            steps {
+                withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: 'docker-registry-shb-deploy-credentials-id',
+                                  usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
 
-                def findScript = "./findDockerImages.bash shb/shb shb/shb-develop $USERNAME"+":"+"$PASSWORD"
-                def ret = sh(script: findScript, returnStdout: true)
-                echo ret
+                    def findScript = "./findDockerImages.bash shb/shb shb/shb-develop $USERNAME" + ":" + "$PASSWORD"
+                    def ret = sh(script: findScript, returnStdout: true)
+                    echo ret
+                }
             }
 
         }
 
         stage('Run kubectl') {
-            sh "kubectl get pods"
-            sh "helm init --service-account tiller --client-only"
-            sh "helm upgrade -i " + env.BRANCH_NAME + " --namespace test ./chart-shb"
+            steps {
+//                sh "kubectl get pods"
+//                sh "helm init --service-account tiller --client-only"
+//                sh "helm upgrade -i " + env.BRANCH_NAME + " --namespace test ./chart-shb"
+            }
         }
     }
 }
