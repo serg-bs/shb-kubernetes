@@ -52,6 +52,9 @@ pipeline {
                     echo "****************  SHB Ui Version : " + versionUi
 //                    echo "*****************  Spent time : " + tookTime
 
+
+                    sh "./replaceVersion.bash " + versionBack +" " + versionUi
+
                 }
             }
 
