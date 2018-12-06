@@ -33,7 +33,7 @@ pipeline {
 
                     def startDate = new Date()
                     def getVersionScript = "./findDockerImages.bash " + shbBackRepo + " " + shbBackRepoLatest + " $REGISTRY_CRED"
-                    def versionBack = sh(script: getVersionScript, returnStdout: true)
+                    def versionBack = sh(script: getVersionScript, returnStdout: true).trim()
                     def endDate = new Date()
 //                    def tookTime = TimeCategory.minus(endDate,startDate).toString()
                     echo "*******************************************************************************"
@@ -45,7 +45,7 @@ pipeline {
                     def uiRepoLatest = "shb/shb-ui-develop"
                     startDate = new Date()
                     getVersionScript = "./findDockerImages.bash " + uiRepo + " " + uiRepoLatest + " $REGISTRY_CRED"
-                    def versionUi = sh(script: getVersionScript, returnStdout: true)
+                    def versionUi = sh(script: getVersionScript, returnStdout: true).trim()
                     endDate = new Date()
 //                    tookTime = TimeCategory.minus(endDate,startDate).toString()
                     echo "*******************************************************************************"
