@@ -27,11 +27,13 @@ pipeline {
                 REGISTRY_CRED = credentials('docker-registry-shb-deploy-credentials-id')
             }
             steps {
-                withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: 'docker-registry-shb-deploy-credentials-id',
-                                  usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                script {
 
-                   sh  "./findDockerImages.bash shb/shb shb/shb-develop $REGISTRY_CRED"
+                    def versionBack = sh(script: "./findDockerImages.bash shb/shb shb/shb-develop $REGISTRY_CRED", returnStdout: true)
                     echo '*******************************************************************************'
+                    echo '****************  SHB Back Version                    *************************'
+                    echo '****************  ${versionBack}                       *************************'
+                    echo ''
 
 
 //                    def ret = sh(script: findScript, returnStdout: true)
