@@ -30,7 +30,7 @@ pipeline {
                 withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: 'docker-registry-shb-deploy-credentials-id',
                                   usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
 
-                    "./findDockerImages.bash shb/shb shb/shb-develop $REGISTRY_CRED"
+                   sh  "./findDockerImages.bash shb/shb shb/shb-develop $REGISTRY_CRED"
                     echo '*******************************************************************************'
 
 
