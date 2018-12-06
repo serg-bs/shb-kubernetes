@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     def shbBackRepo = "shb/shb"
-                    def shbBackRepoLatest = "shb/shb-develop"
+                    def shbBackRepoLatest = "shb/shb-"+$(BRANCH_NAME)
 
                     def startDate = new Date()
                     def getVersionScript = "./findDockerImages.bash " + shbBackRepo + " " + shbBackRepoLatest + " $REGISTRY_CRED"
@@ -53,7 +53,18 @@ pipeline {
                     echo "*****************  Spent time : " + tookTime
 
 
-                    sh "./replaceVersion.bash " + versionBack +" " + versionUi
+                    def filename = './chart-shb/charts/shb-back/values.yaml'
+                    def data = readYaml file: filename
+                    data.image.tag = 'hjkhjkhkj'
+                    sh "rm $filename"
+                    writeYaml file: filename, data: data
+
+                    sh 'cat ./chart-shb/charts/shb-back/values.yaml'
+
+
+//                    sh "./replaceVersion.bash " + versionBack +" " + versionUi
+
+//                    def cartVer = "1.1.0.$BUILD_NUMBER"
 
                 }
             }
