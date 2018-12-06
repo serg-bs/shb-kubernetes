@@ -23,11 +23,17 @@ pipeline {
         }
 
         stage('Find docker images') {
+            environment {
+                REGISTRY_CRED = credentials('docker-registry-shb-deploy-credentials-id')
+            }
             steps {
                 withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: 'docker-registry-shb-deploy-credentials-id',
                                   usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
 
-                    sh "./findDockerImages.bash shb/shb shb/shb-develop $USERNAME" + ":" + "$PASSWORD"
+                    "./findDockerImages.bash shb/shb shb/shb-develop $REGISTRY_CRED"
+                    echo '*******************************************************************************'
+
+
 //                    def ret = sh(script: findScript, returnStdout: true)
                     echo 'hello'
                 }
