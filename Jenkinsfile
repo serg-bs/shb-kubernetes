@@ -31,7 +31,7 @@ pipeline {
                     def shbBackRepo = "shb/shb"
                     def shbBackRepoLatest = "shb/shb-develop"
 
-                    def startDate = new Date().parse('dd/MM/yyyy HH:mm:ss',f.text)
+                    def startDate = new Date()
                     def getVersionScript = "./findDockerImages.bash " + shbBackRepo + " " + shbBackRepoLatest + " $REGISTRY_CRED"
                     def versionBack = sh(script: getVersionScript, returnStdout: true)
                     def endDate = new Date()
@@ -43,7 +43,7 @@ pipeline {
 
                     def uiRepo = "shb/shb-ui"
                     def uiRepoLatest = "shb/shb-ui-develop"
-                    startDate = new Date().parse('dd/MM/yyyy HH:mm:ss',f.text)
+                    startDate = new Date()
                     getVersionScript = "./findDockerImages.bash " + uiRepo + " " + uiRepoLatest + " $REGISTRY_CRED"
                     def versionUi = sh(script: getVersionScript, returnStdout: true)
                     endDate = new Date()
