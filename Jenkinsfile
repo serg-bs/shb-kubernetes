@@ -28,14 +28,30 @@ pipeline {
             }
             steps {
                 script {
+                    def shbBackRepo = "shb/shb"
+                    def shbBackRepoLatest = "shb/shb-develop"
 
-                    def versionBack = sh(script: "./findDockerImages.bash shb/shb shb/shb-develop $REGISTRY_CRED", returnStdout: true)
+                    def startDate = new Date().parse('dd/MM/yyyy HH:mm:ss',f.text)
+                    def getVersionScript = "./findDockerImages.bash " + shbBackRepo + " " + shbBackRepoLatest + " $REGISTRY_CRED"
+                    def versionBack = sh(script: getVersionScript, returnStdout: true)
+                    def endDate = new Date()
+                    def tookTime = groovy.time.TimeCategory.minus(endDate,startDate).toString()
                     echo "*******************************************************************************"
-                    echo "****************  SHB Back Version : " + versionBack +
-                        "*******************************************************************************"
+                    echo "****************  SHB Back Version : " + versionBack
+                    echo "*****************  Spent time : " + tookTime
 
-//                    def ret = sh(script: findScript, returnStdout: true)
-                    echo 'hello'
+
+                    def uiRepo = "shb/shb-ui"
+                    def uiRepoLatest = "shb/shb-ui-develop"
+                    startDate = new Date().parse('dd/MM/yyyy HH:mm:ss',f.text)
+                    getVersionScript = "./findDockerImages.bash " + uiRepo + " " + uiRepoLatest + " $REGISTRY_CRED"
+                    def versionUi = sh(script: getVersionScript, returnStdout: true)
+                    endDate = new Date()
+                    tookTime = groovy.time.TimeCategory.minus(endDate,startDate).toString()
+                    echo "*******************************************************************************"
+                    echo "****************  SHB Ui Version : " + versionUi
+                    echo "*****************  Spent time : " + tookTime
+
                 }
             }
 
