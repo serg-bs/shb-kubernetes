@@ -27,9 +27,9 @@ pipeline {
                 withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: 'docker-registry-shb-deploy-credentials-id',
                                   usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
 
-                    def findScript = "./findDockerImages.bash shb/shb shb/shb-develop $USERNAME" + ":" + "$PASSWORD"
-                    def ret = sh(script: findScript, returnStdout: true)
-                    echo ret
+//                    def findScript = "./findDockerImages.bash shb/shb shb/shb-develop $USERNAME" + ":" + "$PASSWORD"
+//                    def ret = sh(script: findScript, returnStdout: true)
+                    echo 'hello'
                 }
             }
 
