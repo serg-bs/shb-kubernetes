@@ -27,7 +27,7 @@ pipeline {
                 withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: 'docker-registry-shb-deploy-credentials-id',
                                   usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
 
-//                    def findScript = "./findDockerImages.bash shb/shb shb/shb-develop $USERNAME" + ":" + "$PASSWORD"
+                    def findScript = "./findDockerImages.bash shb/shb shb/shb-develop"
 //                    def ret = sh(script: findScript, returnStdout: true)
                     echo 'hello'
                 }
@@ -37,7 +37,7 @@ pipeline {
 
         stage('Run kubectl') {
             steps {
-//                sh "kubectl get pods"
+                sh "kubectl get pods"
 //                sh "helm init --service-account tiller --client-only"
 //                sh "helm upgrade -i " + env.BRANCH_NAME + " --namespace test ./chart-shb"
             }
