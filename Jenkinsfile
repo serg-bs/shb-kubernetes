@@ -31,7 +31,7 @@ pipeline {
 
                     def versionBack = sh(script: "./findDockerImages.bash shb/shb shb/shb-develop $REGISTRY_CRED", returnStdout: true)
                     echo '*******************************************************************************/n'
-                    '****************  SHB Back Version :' +versionBack
+                        +'****************  SHB Back Version :' +versionBack
                         +'*******************************************************************************'
 
 //                    def ret = sh(script: findScript, returnStdout: true)
