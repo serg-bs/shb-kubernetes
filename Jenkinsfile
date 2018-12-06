@@ -35,10 +35,10 @@ pipeline {
                     def getVersionScript = "./findDockerImages.bash " + shbBackRepo + " " + shbBackRepoLatest + " $REGISTRY_CRED"
                     def versionBack = sh(script: getVersionScript, returnStdout: true).trim()
                     def endDate = new Date()
-//                    def tookTime = TimeCategory.minus(endDate,startDate).toString()
+                    def tookTime = TimeCategory.minus(endDate,startDate).toString()
                     echo "*******************************************************************************"
                     echo "****************  SHB Back Version : " + versionBack
-//                    echo "*****************  Spent time : " + tookTime
+                    echo "*****************  Spent time : " + tookTime
 
 
                     def uiRepo = "shb/shb-ui"
@@ -47,10 +47,10 @@ pipeline {
                     getVersionScript = "./findDockerImages.bash " + uiRepo + " " + uiRepoLatest + " $REGISTRY_CRED"
                     def versionUi = sh(script: getVersionScript, returnStdout: true).trim()
                     endDate = new Date()
-//                    tookTime = TimeCategory.minus(endDate,startDate).toString()
+                    tookTime = TimeCategory.minus(endDate,startDate).toString()
                     echo "*******************************************************************************"
                     echo "****************  SHB Ui Version : " + versionUi
-//                    echo "*****************  Spent time : " + tookTime
+                    echo "*****************  Spent time : " + tookTime
 
 
                     sh "./replaceVersion.bash " + versionBack +" " + versionUi

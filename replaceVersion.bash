@@ -6,9 +6,9 @@ UI_TAG=$2
 
 # replace (tag:.*     ->     tag: $BACK_TAG)
 
-#sed -i  "/tag:.*/c \ \ tag: $BACK_TAG" ./chart-shb/charts/shb-back/values.yaml
-#
-#sed -i  "/tag:.*/c \ \ tag: $UI_TAG" ./chart-shb/charts/shb-ui/values.yaml
+sed -i  "/tag:.*/c \ \ tag: $BACK_TAG" ./chart-shb/charts/shb-back/values.yaml
+
+sed -i  "/tag:.*/c \ \ tag: $UI_TAG" ./chart-shb/charts/shb-ui/values.yaml
 
 #sed -i  "/tag:.*/c \ \ tag: $AD_TAG" ./chart-shb/charts/shb-ad/values.yaml
 

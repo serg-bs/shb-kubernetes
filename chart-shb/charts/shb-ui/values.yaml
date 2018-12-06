@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: dc2.my-bg.ru/shb/shb-ui
-  tag: RED-1.0.0.43
+  tag: 
   pullPolicy: IfNotPresent
 
 service:
