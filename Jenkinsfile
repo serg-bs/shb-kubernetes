@@ -35,7 +35,7 @@ pipeline {
                     def getVersionScript = "./findDockerImages.bash " + shbBackRepo + " " + shbBackRepoLatest + " $REGISTRY_CRED"
                     def versionBack = sh(script: getVersionScript, returnStdout: true)
                     def endDate = new Date()
-                    def tookTime = groovy.time.TimeCategory.minus(endDate,startDate).toString()
+                    def tookTime = TimeCategory.minus(endDate,startDate).toString()
                     echo "*******************************************************************************"
                     echo "****************  SHB Back Version : " + versionBack
                     echo "*****************  Spent time : " + tookTime
@@ -43,11 +43,11 @@ pipeline {
 
                     def uiRepo = "shb/shb-ui"
                     def uiRepoLatest = "shb/shb-ui-develop"
-                    startDate = new Date()
+                    startDate = new Date().parse('dd/MM/yyyy HH:mm:ss',f.text)
                     getVersionScript = "./findDockerImages.bash " + uiRepo + " " + uiRepoLatest + " $REGISTRY_CRED"
                     def versionUi = sh(script: getVersionScript, returnStdout: true)
                     endDate = new Date()
-                    tookTime = groovy.time.TimeCategory.minus(endDate,startDate).toString()
+                    tookTime = TimeCategory.minus(endDate,startDate).toString()
                     echo "*******************************************************************************"
                     echo "****************  SHB Ui Version : " + versionUi
                     echo "*****************  Spent time : " + tookTime
