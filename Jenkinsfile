@@ -38,7 +38,7 @@ pipeline {
                     def tookTime = groovy.time.TimeCategory.minus(endDate,startDate).toString()
                     echo "*******************************************************************************"
                     echo "****************  SHB Back Version : " + versionBack
-//                    echo "*****************  Spent time : " + tookTime
+                    echo "*****************  Spent time : " + tookTime
 
 
                     def uiRepo = "shb/shb-ui"
@@ -50,7 +50,7 @@ pipeline {
                     tookTime = groovy.time.TimeCategory.minus(endDate,startDate).toString()
                     echo "*******************************************************************************"
                     echo "****************  SHB Ui Version : " + versionUi
-//                    echo "*****************  Spent time : " + tookTime
+                    echo "*****************  Spent time : " + tookTime
 
 
                     sh "./replaceVersion.bash " + versionBack +" " + versionUi
