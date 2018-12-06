@@ -38,7 +38,7 @@ pipeline {
 //                    def tookTime = TimeCategory.minus(endDate,startDate).toString()
                     echo "*******************************************************************************"
                     echo "****************  SHB Back Version : " + versionBack
-                    echo "*****************  Spent time : " + tookTime
+//                    echo "*****************  Spent time : " + tookTime
 
 
                     def uiRepo = "shb/shb-ui"
@@ -50,7 +50,7 @@ pipeline {
 //                    tookTime = TimeCategory.minus(endDate,startDate).toString()
                     echo "*******************************************************************************"
                     echo "****************  SHB Ui Version : " + versionUi
-                    echo "*****************  Spent time : " + tookTime
+//                    echo "*****************  Spent time : " + tookTime
 
                 }
             }
